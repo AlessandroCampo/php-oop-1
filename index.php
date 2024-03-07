@@ -9,7 +9,19 @@
 
 include 'script.php';
 
-$moviesArray = [$prisoner, $thePrestige]
+$moviesArray = [$prisoner, $thePrestige];
+if (isset($_POST['newReview']) && isset($_POST['movie_title'])) {
+    $newReview = $_POST['newReview'];
+    $reviewedMovie = $_POST['movie_title'];
+
+    foreach ($moviesArray as $movie) {
+        if ($reviewedMovie == $movie->title) {
+            $movie->addReview($newReview);
+            break;
+        }
+    }
+}
+
 
 ?>
 
@@ -19,46 +31,59 @@ $moviesArray = [$prisoner, $thePrestige]
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <title>Document</title>
 </head>
 
 <body>
+    <div class="movies-container d-flex gap-4">
+        <? foreach ($moviesArray as $movie) : ?>
+            <div class="card" style="width: 35rem;">
+                <img src="<?php echo $movie->img_url; ?>" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $movie->title; ?></h5>
+                    <p class="card-text h-25 overflow-hidden fs-6"><?php echo $movie->summary; ?></p>
+                    <p>
+                        <strong> Director: </strong><?php echo $movie->director; ?>
+                    </p>
+                    <p>
+                        <strong> Cast: </strong> <?php echo implode(', ', $movie->cast); ?>
+                    </p>
+                    <p>
+                        <strong> Released in: </strong> <?php echo $movie->release_year; ?>
+                    </p>
+                    <p>
+                    <p>
+                        <strong> Reviews: </strong> <?php echo implode(', ', $movie->reviews); ?>
+                    </p>
+                    <div>
+                        <strong>Vote:</strong>
+                        <span class="stars-container">
+                            <?php for ($x = 0; $x <= $movie->vote; $x++) {
+                                echo "<i class=\"fa-solid fa-star text-warning \"></i>";
+                            } ?>
+                        </span>
+                    </div>
 
-    <!-- <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div> -->
 
 
-    <div class="movies-container d-flex">
-        <div class="single-movie">
-            <h2 class="text-capitalize ">
-                <?
-                echo $prisoner->title;
-                ?>
-            </h2>
-            <ul>
-                <?php
-                foreach ($prisoner as $key => $value) {
-                    echo '<li>' . $key . ': ';
-                    if (is_array($value)) {
-                        echo implode(', ', $value);
-                    } else {
-                        echo $value;
-                    }
+                    </p>
+                    <form action="index.php" method="post">
+                        <button class="btn btn-primary" type="submit">Add a review</button>
+                        <input type="hidden" name="movie_title" value="<?php echo $movie->title; ?>">
+                        <input type="text" name="newReview" id="newReview" style="width: 60%;">
+                    </form>
 
-                    echo '</li>';
-                }
-                ?>
-            </ul>
-        </div>
+                </div>
+
+            </div>
+        <? endforeach ?>
     </div>
+
+
+
 
 
 
