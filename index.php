@@ -41,7 +41,7 @@ if (isset($_POST['newReview']) && isset($_POST['movie_title'])) {
     <div class="movies-container d-flex gap-4">
         <? foreach ($moviesArray as $movie) : ?>
             <div class="card" style="width: 35rem;">
-                <img src="<?php echo $movie->img_url; ?>" class="card-img-top" alt="...">
+                <img src="<?php echo $movie->img_url; ?>" class="card-img-top " alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $movie->title; ?></h5>
                     <p class="card-text h-25 overflow-hidden fs-6"><?php echo $movie->summary; ?></p>
@@ -61,7 +61,7 @@ if (isset($_POST['newReview']) && isset($_POST['movie_title'])) {
                     <div>
                         <strong>Vote:</strong>
                         <span class="stars-container">
-                            <?php for ($x = 0; $x <= $movie->vote; $x++) {
+                            <?php for ($x = 0; $x < $movie->vote; $x++) {
                                 echo "<i class=\"fa-solid fa-star text-warning \"></i>";
                             } ?>
                         </span>
