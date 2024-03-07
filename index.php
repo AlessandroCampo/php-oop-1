@@ -26,7 +26,7 @@ if (isset($_POST['newReview']) && isset($_POST['movie_title'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
